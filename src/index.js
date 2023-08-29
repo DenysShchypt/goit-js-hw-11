@@ -112,19 +112,19 @@ function auditMaxQuantityPhoto(pages,quantityPage) {
 };
 
 function scrollOnePage() {
-     refs.gallery.firstElementChild.getBoundingClientRect();
+    const {height}=refs.gallery.firstElementChild.getBoundingClientRect();
   
     window.scrollBy({
-      top: 50,
+      top: 90,
       behavior: 'smooth',
     });
   };
 
   function scrollSecondPage() {
-    const {height}=refs.gallery.firstElementChild.getBoundingClientRect();
+    refs.gallery.firstElementChild.getBoundingClientRect();
  
    window.scrollBy({
-     top: height*2,
+     top: 590,
      behavior: 'smooth',
    });
  };
