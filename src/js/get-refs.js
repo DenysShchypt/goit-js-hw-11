@@ -4,7 +4,8 @@ form: document.querySelector('.search-form'),
 btnSearch: document.querySelector('button[type="submit"]'),
 gallery: document.querySelector('.gallery'),
 cardPhoto: document.querySelector('.photo-card'),
-loadBtn: document.querySelector('.load-more')
+loadBtn: document.querySelector('.load-more'),
+guard: document.querySelector('.js-guard')
 
      };
  };
