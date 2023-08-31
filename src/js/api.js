@@ -1,4 +1,5 @@
 import axios from "axios";
+
 const URL = 'https://pixabay.com/api/';
 
 const fetchCategory = async (inputValue,page) => {

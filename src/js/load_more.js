@@ -17,7 +17,7 @@ function handlerValueForm(evt) {
     if (inputValue === '') {
         return Notify.warning("Sorry, there are no images matching your search query. Please try again.");
     };
-    fetchCategory(inputValue,page).then(renderCard).catch(error => {
+    fetchCategory(inputValue, page).then(renderCard).catch(error => {
         console.log(error);
     });
     localStorage.setItem("input", inputValue);
@@ -63,7 +63,7 @@ function checkZeroArray(quantityPhoto, quantityPage) {
 
     if (quantityPhoto === 0) {
         Notify.warning("Sorry, there are no images matching your search query. Please try again.");
-        refs.loadBtn.classList.replace( 'js-load-more','load-more');
+        refs.loadBtn.classList.replace('js-load-more', 'load-more');
     } else if (quantityPhoto < 40 && quantityPage === 1) {
         refs.loadBtn.classList.toggle('load-more');
         setTimeout(() => {
@@ -112,7 +112,6 @@ function renderNextCards(res) {
     const quantityPhoto = res.data.totalHits;
     const quantityPage = Math.floor(quantityPhoto / 40);
     refs.gallery.insertAdjacentHTML('beforeend', markupCard);
-    Notify.success(`Hooray! We found ${quantityPhoto} images.`);
     auditMaxQuantityPhoto(page, quantityPage);
     createBigImg();
     scrollSecondPage();
