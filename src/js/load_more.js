@@ -10,19 +10,16 @@ const refs = getRefs();
 refs.form.addEventListener('submit', handlerValueForm);
 refs.loadBtn.addEventListener('click', handlerBtnLoad)
 
-async function handlerValueForm(evt) {
+function handlerValueForm(evt) {
     evt.preventDefault();
     page = 1;
     const inputValue = evt.currentTarget.elements.searchQuery.value.trim();
     if (inputValue === '') {
         return Notify.warning("Sorry, there are no images matching your search query. Please try again.");
     };
-    try {
-        const cards = await fetchCategory(inputValue, page);
-        renderCard(cards);
-    } catch (error) {
+    fetchCategory(inputValue,page).then(renderCard).catch(error => {
         console.log(error);
-    };
+    });
     localStorage.setItem("input", inputValue);
 
 };
@@ -66,6 +63,7 @@ function checkZeroArray(quantityPhoto, quantityPage) {
 
     if (quantityPhoto === 0) {
         Notify.warning("Sorry, there are no images matching your search query. Please try again.");
+        refs.loadBtn.classList.replace( 'js-load-more','load-more');
     } else if (quantityPhoto < 40 && quantityPage === 1) {
         refs.loadBtn.classList.toggle('load-more');
         setTimeout(() => {
@@ -98,19 +96,14 @@ function scrollOnePage() {
 
 };
 
-async function handlerBtnLoad() {
+function handlerBtnLoad(evt) {
 
     page += 1;
     const getRecordInputValue = localStorage.getItem("input");
-    // try {
-    //     const cards = await fetchCategory(getRecordInputValue, page);
-    //     renderNextCards(cards);
-    // } catch (error) {
-    //     console.log(error);
-    // };
     fetchCategory(getRecordInputValue, page).then(renderNextCards).catch(error => {
         console.log(error);
-    })
+    });
+
 };
 
 function renderNextCards(res) {
@@ -138,8 +131,6 @@ function auditMaxQuantityPhoto(pages, quantityPage) {
     };
 
 };
-
-
 
 function scrollSecondPage() {
 

@@ -13,19 +13,16 @@ const options = {
 const observer = new IntersectionObserver(handlerLoadScroll, options);
 refs.form.addEventListener('submit', handlerValueForm);
 
-async function handlerValueForm(evt) {
+function handlerValueForm(evt) {
     evt.preventDefault();
     page = 1;
     const inputValue = evt.currentTarget.elements.searchQuery.value.trim();
     if (inputValue === '') {
         return Notify.warning("Sorry, there are no images matching your search query. Please try again.");
     };
-    try {
-        const cards = await fetchCategory(inputValue, page);
-        renderCard(cards);
-    } catch (error) {
+    fetchCategory(inputValue,page).then(renderCard).catch(error => {
         console.log(error);
-    };
+    });
     localStorage.setItem("input", inputValue);
 
 };
@@ -104,15 +101,12 @@ function smoothScrollingOnePage() {
 function handlerLoadScroll(entries) {
 
     const getRecordInputValue = localStorage.getItem("input");
-    entries.forEach(async entry => {
+    entries.forEach(entry => {
         if (entry.isIntersecting) {
             page += 1;
-            try {
-                const cards = await fetchCategory(getRecordInputValue, page);
-                renderNextCards(cards);
-            } catch (error) {
+            fetchCategory(getRecordInputValue, page).then(renderNextCards).catch(error => {
                 console.log(error);
-            };
+            });
         }
     });
 
